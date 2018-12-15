@@ -11,7 +11,7 @@
 
 - name: 'MONITORING | NODE | Deploy Docker compose project'
   include_role:
-    name: 'infopen.docker-service__1.0.0'
+    name: 'infopen.docker-service__1.0.1'
   tags:
     - 'role::monitoring-node'
     - 'role::monitoring-node::service'
