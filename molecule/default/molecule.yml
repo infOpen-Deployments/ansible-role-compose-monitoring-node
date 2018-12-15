@@ -1,0 +1,69 @@
+---
+
+dependency:
+  name: 'galaxy'
+driver:
+  name: 'docker'
+lint:
+  name: 'yamllint'
+platforms:
+  - name: "monitoring-node-docker-centos"
+    image: 'centos/systemd'
+    command: '/usr/sbin/init'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+  - name: "monitoring-node-docker-stretch"
+    image: 'minimum2scp/systemd-stretch:latest'
+    command: '/sbin/init'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+  - name: "monitoring-node-docker-bionic"
+    image: 'solita/ubuntu-systemd:18.04'
+    command: '/sbin/init'
+    cap_add:
+      - 'SYS_PTRACE'
+    privileged: True
+provisioner:
+  name: 'ansible'
+  config_options:
+    defaults:
+      private_key_file: "${MOLECULE_PRIVATE_KEY_FILE}"
+  lint:
+    name: 'ansible-lint'
+  inventory:
+    group_vars:
+      all:
+        ansistrano_after_update_code_tasks_file: "${MOLECULE_EPHEMERAL_DIRECTORY}/roles/infopen.docker-service__1.0.0/tasks/after_update_code.yml"
+        ansistrano_after_cleanup_tasks_file: "${MOLECULE_EPHEMERAL_DIRECTORY}/roles/infopen.docker-service__1.0.0/tasks/after_clean_up.yml"
+        ansistrano_allow_anonymous_stats: False
+        ansistrano_git_identity_key_path: "${MOLECULE_PRIVATE_KEY_FILE}"
+        ansistrano_release_version: '19700101-1.0.0'
+        pip_install_packages:
+          - name: 'docker'
+    host_vars:
+      docker-service-docker-centos:
+        pip_install_packages:
+          - name: 'docker'
+scenario:
+  name: 'default'
+  test_sequence:
+    - 'lint'
+    - 'destroy'
+    - 'dependency'
+    - 'syntax'
+    - 'create'
+    - 'prepare'
+    - 'converge'
+    - 'side_effect'
+    - 'verify'
+    - 'destroy'
+verifier:
+  name: 'testinfra'
+  additional_files_or_dirs:
+    - '../../tests'
+  lint:
+    name: 'flake8'
+  options:
+    sudo: True

@@ -1,0 +1,29 @@
+---
+
+# Role tests
+
+- name: 'Converge | Prerequisites tasks'
+  hosts: 'all'
+  gather_facts: False
+  tasks:
+    - block:
+        - name: 'PREREQUISITES | APT | Do an apt-get update'
+          become: True
+          raw: 'apt-get update -qq'
+          changed_when: False
+        - name: 'PREREQUISITES | APT | Install git, python 2.7 and rsync'
+          become: True
+          raw: 'apt-get install -qq git python2.7 rsync'
+          changed_when: False
+      when: "inventory_hostname in ['monitoring-node-docker-stretch', 'monitoring-node-docker-bionic']"
+    - name: 'PREREQUISITES | YUM | Install git and rsync'
+      become: True
+      raw: 'yum install -y git rsync'
+      changed_when: False
+      when: "inventory_hostname == 'monitoring-node-docker-centos'"
+
+
+- name: 'Converge | Main tasks'
+  hosts: 'all'
+  roles:
+    - role: "ansible-role-monitoring-node"

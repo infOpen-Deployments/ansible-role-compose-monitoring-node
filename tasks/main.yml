@@ -1,0 +1,25 @@
+---
+
+# Main tasks file for monitoring-node role
+
+- name: 'INIT | Manage variables to use for our target'
+  import_tasks: "{{ role_path }}/tasks/manage_variables.yml"
+  tags:
+    - 'role::monitoring-node'
+    - 'role::monitoring-node::init'
+
+
+- name: 'MONITORING | NODE | Deploy Docker compose project'
+  include_role:
+    name: 'infopen.docker-service__1.0.0'
+  tags:
+    - 'role::monitoring-node'
+    - 'role::monitoring-node::service'
+  vars:
+    _ansistrano_git_repo: "{{ monitoring_node_git_repo }}"
+    _ansistrano_git_branch: "{{ monitoring_node_git_branch }}"
+    _docker_service_project_name: 'monitoring-node'
+    _docker_service_templates: "{{ monitoring_node_templates }}"
+    _docker_service_networks: "{{ monitoring_node_networks }}"
+    _docker_service_volumes: "{{ monitoring_node_volumes }}"
+    __docker_service_prometheus: "{{ monitoring_node_prometheus }}"

@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+[backend]
+host tags = {{ monitoring_node_netdata_backend_host_tags | join(' ') }}
+enabled = {{ monitoring_node_netdata_backend_enabled }}
+data source = {{ monitoring_node_netdata_backend_data_source }}
+type = {{ monitoring_node_netdata_backend_type }}
+destination = {{ monitoring_node_netdata_backend_destination }}
+prefix = {{ monitoring_node_netdata_backend_prefix }}
+hostname = {{ monitoring_node_netdata_backend_hostname }}
+update every = {{ monitoring_node_netdata_backend_update_every }}
+buffer on failures = {{ monitoring_node_netdata_backend_buffer_on_failures }}
+timeout ms = {{ monitoring_node_netdata_backend_timeout_ms }}
+send names instead of ids = {{ monitoring_node_netdata_backend_send_name_instead_of_ids }}
+send charts matching = {{ monitoring_node_netdata_backend_send_charts_matching }}
