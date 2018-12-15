@@ -1,0 +1,42 @@
+---
+
+# Defaults vars file for monitoring-node role
+
+# Ansistrano configuration
+monitoring_node_git_repo: 'git@gitlab.com:/infopen/infrastructure/docker-services/docker-monitoring-node.git'
+monitoring_node_git_branch: '1.0.0'
+
+
+# Role configuration
+monitoring_node_networks: []
+monitoring_node_templates:
+  - src: "templates/config/netdata/netdata.conf.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/config/netdata/netdata.conf"
+  - src: "templates/dot_env.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/.env"
+monitoring_node_volumes: []
+
+
+# Netdata
+monitoring_node_netdata_backend_host_tags:
+  - "distribution={{ ansible_distribution }}"
+  - "distribution_version={{ ansible_distribution_version }}"
+  - "nodename={{ ansible_nodename }}"
+  - "system={{ ansible_system }}"
+monitoring_node_netdata_backend_enabled: 'yes'
+monitoring_node_netdata_backend_data_source: 'as collected'
+monitoring_node_netdata_backend_type: 'opentsdb'
+monitoring_node_netdata_backend_destination: "tcp:{{ _monitoring_influxdb_host_private_fqdn | mandatory }}:4242"
+monitoring_node_netdata_backend_prefix: 'netdata'
+monitoring_node_netdata_backend_hostname: "{{ ansible_nodename }}"
+monitoring_node_netdata_backend_update_every: 10
+monitoring_node_netdata_backend_buffer_on_failures: 10
+monitoring_node_netdata_backend_timeout_ms: 20000
+monitoring_node_netdata_backend_send_name_instead_of_ids: 'yes'
+monitoring_node_netdata_backend_send_charts_matching: '*'
+
+# Process exporter
+monitoring_node_process_exporter_procnames:
+  - 'cron'
+  - 'fail2ban-server'
+  - 'ssh'
