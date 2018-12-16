@@ -1,2 +1,14 @@
+# {{ ansible_managed }}
+
+#
+# GENERAL
+#
 LISTEN_IP_ADDRESS={{ _host_vrack_management_ip }}
+LOGGING_MAX_FILE={{ _monitoring_node_logging_max_file }}
+LOGGING_MAX_SIZE={{ _monitoring_node_logging_max_size }}
+
+
+#
+# EXPORTERS
+#
 PROCESS_EXPORTER_PROCNAMES={{ monitoring_node_process_exporter_procnames | join(',') }}

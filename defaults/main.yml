@@ -17,6 +17,13 @@ monitoring_node_templates:
 monitoring_node_volumes: []
 
 
+#
+# Monitoring node environment variables
+#
+_monitoring_node_logging_max_file: 2
+_monitoring_node_logging_max_size: '25m'
+
+
 # Netdata
 monitoring_node_netdata_backend_host_tags:
   - "distribution={{ ansible_distribution }}"
