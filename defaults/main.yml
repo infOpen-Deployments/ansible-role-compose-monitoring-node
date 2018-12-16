@@ -4,7 +4,7 @@
 
 # Ansistrano configuration
 monitoring_node_git_repo: 'git@gitlab.com:/infopen/infrastructure/docker-services/docker-monitoring-node.git'
-monitoring_node_git_branch: '1.0.0'
+monitoring_node_git_branch: '1.2.0'
 
 
 # Role configuration
@@ -15,6 +15,13 @@ monitoring_node_templates:
   - src: "templates/dot_env.j2"
     dest: "{{ ansistrano_release_path.stdout }}/.env"
 monitoring_node_volumes: []
+
+
+#
+# Monitoring node environment variables
+#
+_monitoring_node_logging_max_file: 2
+_monitoring_node_logging_max_size: '25m'
 
 
 # Netdata
