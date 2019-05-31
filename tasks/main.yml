@@ -18,6 +18,9 @@
   vars:
     _ansistrano_git_repo: "{{ monitoring_node_git_repo }}"
     _ansistrano_git_branch: "{{ monitoring_node_git_branch }}"
+    _docker_service_compose_options: "{{ monitoring_node_compose_options }}"
+    _docker_service_compose_override: "{{ monitoring_node_compose_override }}"
+    _docker_service_compose_path: "{{ monitoring_node_compose_path }}"
     _docker_service_project_name: "{{ monitoring_node_project_name }}"
     _docker_service_templates: "{{ monitoring_node_templates }}"
     _docker_service_networks: "{{ monitoring_node_networks }}"
