@@ -8,6 +8,10 @@ monitoring_node_git_branch: '1.3.0'
 
 
 # Role configuration
+monitoring_node_compose_override:
+  version: '3'
+monitoring_node_compose_options: ''
+monitoring_node_compose_path: '/usr/local/bin/docker-compose'
 monitoring_node_project_name: 'monitoring-node'
 monitoring_node_networks: []
 monitoring_node_templates:
