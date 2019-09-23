@@ -4,8 +4,29 @@
 # GENERAL
 #
 LISTEN_IP_ADDRESS={{ monitoring_node_listen_ip_address }}
-LOGGING_MAX_FILE={{ _monitoring_node_logging_max_file }}
-LOGGING_MAX_SIZE={{ _monitoring_node_logging_max_size }}
+LOGGING_MAX_FILE={{ monitoring_node_logging_max_file }}
+LOGGING_MAX_SIZE={{ monitoring_node_logging_max_size }}
+
+
+#
+# CAdvisor
+#
+CADVISOR_IMAGE_NAME={{ monitoring_node_cadvisor_image_name }}
+CADVISOR_IMAGE_VERSION={{ monitoring_node_cadvisor_image_version }}
+
+
+#
+# Node exporter
+#
+NODE_EXPORTER_IMAGE_NAME={{ monitoring_node_node_exporter_image_name }}
+NODE_EXPORTER_IMAGE_VERSION={{ monitoring_node_node_exporter_image_version }}
+
+
+#
+# Process exporter
+#
+PROCESS_EXPORTER_IMAGE_NAME={{ monitoring_node_process_exporter_image_name }}
+PROCESS_EXPORTER_IMAGE_VERSION={{ monitoring_node_process_exporter_image_version }}
 
 
 #
