@@ -4,51 +4,34 @@
 
 # Ansistrano configuration
 monitoring_node_git_repo: 'git@gitlab.com:/infopen/infrastructure/docker-services/docker-monitoring-node.git'
-monitoring_node_git_branch: '1.3.0'
+monitoring_node_git_branch: '2.0.0'
 
 
 # Role configuration
 monitoring_node_compose_override:
-  version: '3'
+  version: '3.4'
 monitoring_node_compose_options: ''
 monitoring_node_compose_path: '/usr/local/bin/docker-compose'
 monitoring_node_project_name: 'monitoring-node'
 monitoring_node_networks: []
 monitoring_node_templates:
-  - src: "templates/config/netdata/netdata.conf.j2"
-    dest: "{{ ansistrano_release_path.stdout }}/config/netdata/netdata.conf"
   - src: "templates/dot_env.j2"
     dest: "{{ ansistrano_release_path.stdout }}/.env"
 monitoring_node_volumes: []
 
 
 #
-# Monitoring node environment variables
+# Monitoring node .env variables
 #
 monitoring_node_listen_ip_address: '127.0.0.1'
-_monitoring_node_logging_max_file: 2
-_monitoring_node_logging_max_size: '25m'
-
-
-# Netdata
-monitoring_node_netdata_backend_host_tags:
-  - "distribution={{ ansible_distribution }}"
-  - "distribution_version={{ ansible_distribution_version }}"
-  - "nodename={{ ansible_nodename }}"
-  - "system={{ ansible_system }}"
-monitoring_node_netdata_backend_enabled: 'yes'
-monitoring_node_netdata_backend_data_source: 'as collected'
-monitoring_node_netdata_backend_type: 'opentsdb'
-monitoring_node_netdata_backend_destination: "tcp:{{ _monitoring_influxdb_host_private_fqdn | mandatory }}:4242"
-monitoring_node_netdata_backend_prefix: 'netdata'
-monitoring_node_netdata_backend_hostname: "{{ ansible_nodename }}"
-monitoring_node_netdata_backend_update_every: 10
-monitoring_node_netdata_backend_buffer_on_failures: 10
-monitoring_node_netdata_backend_timeout_ms: 20000
-monitoring_node_netdata_backend_send_name_instead_of_ids: 'yes'
-monitoring_node_netdata_backend_send_charts_matching: '*'
-
-# Process exporter
+monitoring_node_logging_max_file: 2
+monitoring_node_logging_max_size: '25m'
+monitoring_node_cadvisor_image_name: 'google/cadvisor'
+monitoring_node_cadvisor_image_version: 'v0.33.0'
+monitoring_node_node_exporter_image_name: 'bitnami/node-exporter'
+monitoring_node_node_exporter_image_version: '0.18.1'
+monitoring_node_process_exporter_image_name: 'ncabatoff/process-exporter'
+monitoring_node_process_exporter_image_version: '0.5.0'
 monitoring_node_process_exporter_procnames:
   - 'cron'
   - 'fail2ban-server'
